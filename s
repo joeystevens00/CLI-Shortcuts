@@ -38,7 +38,6 @@ function shortCutFor() {
 	done
 
 	" > $CLISHORTCUTTMPFILE
-	less $CLISHORTCUTTMPFILE
 }
 
 function shortCutWhile() {
@@ -106,5 +105,4 @@ function --() {
 	parseargs "$@"
 	checkShortCut
 }
-export -f --
 -- "$@"
