@@ -5,7 +5,7 @@ function parseargs() {
 	# If we're given less than 3 arguments show an error
 	if (($# < 3)); then
 		echo "incorrect usage."
-		NOCLEANUP=1 # Don't try to delete a file that doesn't exit
+		NOCLEANUP=1 # Don't try to delete a file that doesn't exist
 		exit 1
 	fi
 
@@ -20,17 +20,18 @@ function parseargs() {
 			break
 		fi
 		((x++))
-		shift
+		shift # go to the next command line arg
 	done
 }
 
 function replaceIterableSyntax() {
+	# Parse out our special syntax for the variables we will use
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{}/\"\$CLISHORTCUTOPTIONITERABLE"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{basename}/\"\$CLISHORTCUTFILENAME\"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{ext}/\"\$CLISHORTCUTFILEEXT\"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{dirname}/\"\$CLISHORTCUTDIRNAME\"/g')
 
-	# This is the code that sets up the vars for our DSL
+	# Sets up the vars for our DSL
 	SETUPVARS=" 
 		# we cut . if it happens to be the first character and then get every character after the first .
 		CLISHORTCUTFILEEXT=\$(basename \"\$CLISHORTCUTOPTIONITERABLE\" | sed 's/^\.//' | cut -d . -f2-)
@@ -61,6 +62,8 @@ function shortCutFor() {
 
 function shortCutWhile() {
 	# Creates the shourtcut while [[ logic ]] 
+	# This feels not unique and outclassed by others
+	# TODO: Find a purpose for while/until with a better syntax
 	echo -e "
 	#!/bin/bash
 	while [[ $OPTION ]]
@@ -77,6 +80,8 @@ function shortCutLoop() {
 
 	# If the first word in the COMMAND is a number this will contain that number
 	# Otherwise this will contain 0
+	# This should be a safe assumption 
+	# because generally there won't or at least shouldn't be commands that are all numbers
 	local -i end=$(echo "$COMMAND" | cut -d" " -f1)
 	if ((end==0)); then
 		start=1
@@ -137,7 +142,7 @@ function cliShortCutCleanUp() {
 	fi
 }
 
-function --() {
+function mainFunct() {
 	# Main function
 	# Cleanup on exit
 	trap cliShortCutCleanUp SIGTERM SIGHUP SIGINT SIGQUIT EXIT
@@ -146,4 +151,4 @@ function --() {
 	parseargs "$@"
 	checkShortCut
 }
--- "$@"
+mainFunct "$@"
