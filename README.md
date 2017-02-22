@@ -63,3 +63,4 @@ There are a few variables that can be accessed when executing commands
 *{}* - The current iterable    
 *{basename}* - If the iterable is a filename this will contain the basename of that filename    
 *{ext}* - If the iterable is a filename this will contain the extension of that filename    
+*{dirname}* - If the iterable is a filename this will contain the path of that filename (if provided in the iterable)
