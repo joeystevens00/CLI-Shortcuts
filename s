@@ -137,7 +137,7 @@ function checkShortCut() {
 }
 
 function cliShortCutCleanUp() {
-	if ((NOCLEANUP!=1)); then
+	if ((NOCLEANUP!=1)); then # No clean up is set to 1 if the used incorrect syntax
 		rm "$CLISHORTCUTTMPFILE"
 	fi
 }
