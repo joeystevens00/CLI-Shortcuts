@@ -28,6 +28,7 @@ function replaceIterableSyntax() {
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{}/\"\$CLISHORTCUTOPTIONITERABLE"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{basename}/\"\$CLISHORTCUTFILENAME\"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{ext}/\"\$CLISHORTCUTFILEEXT\"/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/{dirname}/\"\$CLISHORTCUTDIRNAME\"/g')
 
 	# This is the code that sets up the vars for our DSL
 	SETUPVARS=" 
@@ -39,6 +40,8 @@ function replaceIterableSyntax() {
 
 		# When we have a scenario like .tar.gz we may end up with a trailing .
 		CLISHORTCUTFILENAME=\$(basename \$CLISHORTCUTOPTIONITERABLE \$CLISHORTCUTFILEEXT)
+
+		CLISHORTCUTDIRNAME=\$(dirname \$CLISHORTCUTOPTIONITERABLE)
 	"
 }
 
