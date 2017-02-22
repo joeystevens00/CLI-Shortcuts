@@ -30,8 +30,8 @@ function replaceIterableSyntax() {
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{basename}/\"\$CLISHORTCUTFILENAME\"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{ext}/\"\$CLISHORTCUTFILEEXT\"/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/{dirname}/\"\$CLISHORTCUTDIRNAME\"/g')
-	COMMAND=$(echo -e "$COMMAND" | sed 's/{err}/\; echo -n $?/g')
-	COMMAND=$(echo -e "$COMMAND" | sed 's/{errnl}/\; echo $?/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/@err@/\; echo -n $?/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/@errnl@/\; echo $?/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/@@/\;/g' | sed 's/\\@/@/g')
 
 	# Sets up the vars for our DSL
