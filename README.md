@@ -30,3 +30,18 @@ count 2
 count 3
 count 4
 ```
+
+#### Loopf
+The loopf loops through a file
+```
+$ cat pinglist  
+google.com
+yahoo.com
+$ s loopf pinglist ping -c1 {}
+PING google.com (172.217.6.14) 56(84) bytes of data.
+. . .
+. . .
+PING yahoo.com (98.139.183.24) 56(84) bytes of data.
+. . .
+. . .
+```
