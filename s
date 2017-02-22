@@ -14,8 +14,18 @@ function parseargs() {
 		if((x==1)); then
 			SHORTCUT="$1" # Contains the shortcut we will use
 		elif  ((x==2)); then
-			OPTION="$1" # Contains options for that shortcut
+			if [ -f "$1" ]; then # If this option is a File
+				FILES+="$1 " #
+				if [ -f "$2" ]; then 
+					x=1 # The next file is a file so we'll have to do this again
+				else
+					x=2 # Don't enter this logic chain again
+				fi
+			else
+				OPTION="$1"
+			fi
 		else
+			if [ "$FILES" ]; then OPTION="$FILES"; fi
 			COMMAND="$@" # Contains everything else
 			break
 		fi
@@ -132,6 +142,8 @@ function checkShortCut() {
 			shortCutLoop ;;
 		loopf) 
 			shortCutLoopf ;;
+		gloop)
+			shortCutgloop ;;
 		*)
 			echo "Incorrect usage"
 			NOCLEANUP=1
