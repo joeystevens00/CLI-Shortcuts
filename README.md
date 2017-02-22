@@ -64,3 +64,9 @@ There are a few variables that can be accessed when executing commands
 *{basename}* - If the iterable is a filename this will contain the basename of that filename    
 *{ext}* - If the iterable is a filename this will contain the extension of that filename    
 *{dirname}* - If the iterable is a filename this will contain the path of that filename (if provided in the iterable)
+
+### Special Syntax
+There is special syntax that can make life easier    
+*@@* - End the current command. This is the equivalent of ; (e.g. `echo -n hi, @@ echo how are you `)    
+*{err}* - Prints the error code of the last command on the current line (echo -n $?)    
+*{errnl}* - Prints the error code of the last command on the current line (echo $?)    
