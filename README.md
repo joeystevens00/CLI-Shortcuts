@@ -17,7 +17,7 @@ hello bill
 $ ls test/*.txt 
 test/test2.txt  test/test3.txt  test/test.txt
 
-$ s for "`ls test/*.txt`" echo {basename}
+$ s for test/*.txt echo {basename}
 test2
 test3
 test
