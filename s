@@ -25,7 +25,21 @@ function parseargs() {
 }
 
 function replaceIterableSyntax() {
-	echo -e "$1" | sed 's/{}/\"$CLISHORTCUTOPTIONITERABLE"/g'
+	COMMAND=$(echo -e "$COMMAND" | sed 's/{}/\"\$CLISHORTCUTOPTIONITERABLE"/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/{basename}/\"\$CLISHORTCUTFILENAME\"/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/{ext}/\"\$CLISHORTCUTFILEEXT\"/g')
+
+	# This is the code that sets up the vars for our DSL
+	SETUPVARS=" 
+		# we cut . if it happens to be the first character and then get every character after the first .
+		CLISHORTCUTFILEEXT=\$(basename \"\$CLISHORTCUTOPTIONITERABLE\" | sed 's/^\.//' | cut -d . -f2-)
+
+		# If we removed the leading . then lets put it back
+		CLISHORTCUTFILEEXT=\$(echo -e \$CLISHORTCUTFILEEXT | sed 's/^\([a-z]\)/\.\1/g')
+
+		# When we have a scenario like .tar.gz we may end up with a trailing .
+		CLISHORTCUTFILENAME=\$(basename \$CLISHORTCUTOPTIONITERABLE \$CLISHORTCUTFILEEXT)
+	"
 }
 
 function shortCutFor() {
@@ -34,6 +48,7 @@ function shortCutFor() {
 	#!/bin/bash
 	for CLISHORTCUTOPTIONITERABLE in $OPTION
 	do 
+		$SETUPVARS
 		$COMMAND
 	done
 
@@ -46,6 +61,7 @@ function shortCutWhile() {
 	#!/bin/bash
 	while [[ $OPTION ]]
 	do 
+		$SETUPVARS
 		$COMMAND
 	done
 
@@ -70,6 +86,7 @@ function shortCutLoop() {
 	for((x=$start; x<=$end; x++))
 	do
 		CLISHORTCUTOPTIONITERABLE=\$x
+		$SETUPVARS
 		$COMMAND
 	done
 	" > $CLISHORTCUTTMPFILE
@@ -83,6 +100,7 @@ function shortCutLoopf() {
 	#!/bin/bash
 	for CLISHORTCUTOPTIONITERABLE in $FILE
 	do 
+		$SETUPVARS
 		$COMMAND
 	done
 
@@ -92,7 +110,7 @@ function shortCutLoopf() {
 function checkShortCut() {
 	# Checks what shortcut to use and executes that shortcut
 	shopt -s nocasematch
-	COMMAND=$(replaceIterableSyntax "$COMMAND")
+	replaceIterableSyntax
 	case "$SHORTCUT" in
 		for)
 			shortCutFor ;;
