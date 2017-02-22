@@ -75,17 +75,37 @@ function shortCutLoop() {
 	" > $CLISHORTCUTTMPFILE
 }
 
+function shortCutLoopf() {
+	# Creates the shortcut that iterates through a file
+	FILE=$(cat $OPTION)
+	FILE=$(echo -e "$FILE" | tr '\n' ' ')
+	echo -e "
+	#!/bin/bash
+	for CLISHORTCUTOPTIONITERABLE in $FILE
+	do 
+		$COMMAND
+	done
+
+	" > $CLISHORTCUTTMPFILE
+	less $CLISHORTCUTTMPFILE
+}
+
 function checkShortCut() {
 	# Checks what shortcut to use and executes that shortcut
 	shopt -s nocasematch
 	COMMAND=$(replaceIterableSyntax "$COMMAND")
-	if [[ "$SHORTCUT" == "for" ]]; then
-		shortCutFor
-	elif [[ "$SHORTCUT" == "while" ]]; then
-		shortCutWhile
-	elif [[ "$SHORTCUT" == "loop" ]]; then
-		shortCutLoop
-	fi
+	case "$SHORTCUT" in
+		for)
+			shortCutFor ;;
+		while)
+			shortCutWhile ;;
+		loop)
+			shortCutLoop ;;
+		loopf) 
+			shortCutLoopf ;;
+		*)
+			echo "Incorrect usage"
+	esac
  
 	source "$CLISHORTCUTTMPFILE"
 }
