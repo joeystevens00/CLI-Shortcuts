@@ -15,8 +15,8 @@ function parseargs() {
 			SHORTCUT="$1" # Contains the shortcut we will use
 		elif  ((x==2)); then
 			if [ -f "$1" ]; then # If this option is a File
-				FILES+="$1 " #
-				if [ -f "$2" ]; then 
+				FILES+="$1\n"
+				if [ -f "$2" ] && [ -z $(echo -e "$FILES" | grep "^$2$") ]; then 
 					x=1 # The next file is a file so we'll have to do this again
 				else
 					x=2 # Don't enter this logic chain again
@@ -71,6 +71,7 @@ function shortCutFor() {
 	done
 
 	" > $CLISHORTCUTTMPFILE
+	less $CLISHORTCUTTMPFILE
 }
 
 function shortCutWhile() {
