@@ -87,7 +87,6 @@ function shortCutLoopf() {
 	done
 
 	" > $CLISHORTCUTTMPFILE
-	less $CLISHORTCUTTMPFILE
 }
 
 function checkShortCut() {
