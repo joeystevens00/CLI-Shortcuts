@@ -12,6 +12,18 @@ hello bob
 hello bill
 ```
 
+
+```
+$ ls test/*.txt 
+test/test2.txt  test/test3.txt  test/test.txt
+
+$ s for "`ls test/*.txt`" echo {basename}
+test2
+test3
+test
+
+```
+
 #### Loop
 The loop shortcut creates a loop that will loop X times or loop through a range
 ```
@@ -45,3 +57,9 @@ PING yahoo.com (98.139.183.24) 56(84) bytes of data.
 . . .
 . . .
 ```
+### Special variables
+There are a few variables that can be accessed when executing commands
+
+*{}* - The current iterable
+*{basename}* - If the iterable is a filename this will contain the basename of that filename
+*{ext}* - If the iterable is a filename this will contain the extension of that filename
