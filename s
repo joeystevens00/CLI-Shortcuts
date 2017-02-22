@@ -46,7 +46,8 @@ function shortCutFor() {
 	# Creates the shortcut for iteratable in OPTION
 	echo -e "
 	#!/bin/bash
-	for CLISHORTCUTOPTIONITERABLE in $OPTION
+	cleanOption=$(echo -e \"$OPTION\" | tr '\n' ' ')
+	for CLISHORTCUTOPTIONITERABLE in \$cleanOption
 	do 
 		$SETUPVARS
 		$COMMAND
