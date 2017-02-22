@@ -32,12 +32,13 @@ function shortCutFor() {
 	# Creates the shortcut for iteratable in OPTION
 	echo -e "
 	#!/bin/bash
-	for CLISHORTCUTOPTIONITERABLE in \"$OPTION\"
+	for CLISHORTCUTOPTIONITERABLE in $OPTION
 	do 
 		$COMMAND
 	done
 
 	" > $CLISHORTCUTTMPFILE
+	less $CLISHORTCUTTMPFILE
 }
 
 function shortCutWhile() {
