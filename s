@@ -4,7 +4,7 @@
 function parseargs() {
 	# If we're given less than 3 arguments show an error
 	if (($# < 3)); then
-		echo "incorrect usage."
+		echo "Incorrect usage"
 		NOCLEANUP=1 # Don't try to delete a file that doesn't exist
 		exit 1
 	fi
@@ -131,13 +131,16 @@ function checkShortCut() {
 			shortCutLoopf ;;
 		*)
 			echo "Incorrect usage"
+			NOCLEANUP=1
+			exit 1
 	esac
  
 	source "$CLISHORTCUTTMPFILE"
 }
 
 function cliShortCutCleanUp() {
-	if ((NOCLEANUP!=1)); then # No clean up is set to 1 if the used incorrect syntax
+	# No clean up is set to 1 if the used incorrect syntax
+	if ((NOCLEANUP!=1)) && [ -f "$CLISHORTCUTTMPFILE" ]; then 
 		rm "$CLISHORTCUTTMPFILE"
 	fi
 }
