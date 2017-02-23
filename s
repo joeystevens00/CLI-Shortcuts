@@ -76,7 +76,6 @@ function shortCutFor() {
 	done
 
 	" > $CLISHORTCUTTMPFILE
-	less $CLISHORTCUTTMPFILE
 }
 
 function shortCutWhile() {
