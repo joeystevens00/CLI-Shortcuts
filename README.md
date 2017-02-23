@@ -69,4 +69,4 @@ There are a few variables that can be accessed when executing commands
 There is special syntax that can make life easier    
 **@@** - End the current command. This is the equivalent of ; (e.g. `echo -n hi, @@ echo how are you `). @@ can be escaped like so \@\@ or even just @\@     
 **@err@** - Prints the error code of the last command on the current line (echo -n $?)    
-**@errnl@** - Prints the error code of the last command on the current line (echo $?)    
+**@errnl@** - Prints the error code of the last command on a new line (echo $?)    
