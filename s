@@ -116,6 +116,7 @@ function shortCutLoop() {
 
 function shortCutLoopf() {
 	# Creates the shortcut that iterates through a file
+	OPTION=$(echo -e "$OPTION" | tr -d ' ')
 	FILE=$(cat $OPTION)
 	FILE=$(echo -e "$FILE" | tr '\n' ' ')
 	echo -e "
