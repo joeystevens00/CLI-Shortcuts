@@ -46,6 +46,7 @@ function replaceIterableSyntax() {
 	COMMAND=$(echo -e "$COMMAND" | sed 's/@err@/\; echo -n $?/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/@errnl@/\; echo $?/g')
 	COMMAND=$(echo -e "$COMMAND" | sed 's/@@/\;/g' | sed 's/\\@/@/g')
+	COMMAND=$(echo -e "$COMMAND" | sed 's/%%/\|/g' | sed 's/\\%/%/g')
 
 	# Sets up the vars for our DSL
 	SETUPVARS=" 
@@ -75,6 +76,7 @@ function shortCutFor() {
 	done
 
 	" > $CLISHORTCUTTMPFILE
+	less $CLISHORTCUTTMPFILE
 }
 
 function shortCutWhile() {
